@@ -36,3 +36,4 @@ build/
 flyway.conf
 .mvn/
 mvnw.cmd
+mvnw
