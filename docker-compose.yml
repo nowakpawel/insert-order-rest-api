@@ -1,0 +1,10 @@
+services:
+  db:
+    image: mariadb:11.2.5
+    ports:
+      - 8083:3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: insertapi
+    volumes:
+      - ./data:/var/lib/mysql
