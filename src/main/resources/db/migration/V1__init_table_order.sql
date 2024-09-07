@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS `orders` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `customer_name` VARCHAR(100) NOT NULL,
+    `order_date` DATE NOT NULL,
+    `total_amount` DECIMAL(10, 2) NOT NULL,
+    `status` ENUM('PENDING', 'CONFIRMED', 'CANCELLED', 'DELIVERED') NOT NULL DEFAULT 'PENDING'
+);

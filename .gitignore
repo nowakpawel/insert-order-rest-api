@@ -37,3 +37,4 @@ flyway.conf
 .mvn/
 mvnw.cmd
 mvnw
+data/
