@@ -1,4 +1,4 @@
-package pl.com.insert.order_api;
+package pl.com.insert.orderapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

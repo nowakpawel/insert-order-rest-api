@@ -1,4 +1,4 @@
-package pl.com.insert.order_api;
+package pl.com.insert.orderapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
