@@ -19,10 +19,6 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Order putOrder(Order order) {
-        return orderRepository.save(order);
-    }
-
     public Order findOrderById(Integer id) {
         Optional<Order> optionalOrder = orderRepository.findById(id);
 
@@ -32,6 +28,10 @@ public class OrderService {
 
         log.error("Order with id %d does not exists".formatted(id));
         return null;
+    }
+
+    public Order putOrder(Order order) {
+        return orderRepository.save(order);
     }
 
 }

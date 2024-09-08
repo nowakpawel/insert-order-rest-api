@@ -1,5 +1,7 @@
 package pl.com.insert.orderapi.web.service;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +15,7 @@ import pl.com.insert.orderapi.web.repository.OrderRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -21,9 +24,29 @@ import static org.mockito.Mockito.when;
 class OrderServiceTest {
     @Mock
     private OrderRepository orderRepository;
-
     @InjectMocks
     private OrderService service;
+
+    private Order order;
+    private LocalDateTime timeWhenCreated;
+
+    @BeforeEach
+    void setup() {
+        timeWhenCreated = LocalDateTime.now();
+
+        order = Order.builder()
+                .id(1)
+                .customerName("Pawel")
+                .orderCreatedDate(timeWhenCreated)
+                .totalAmount(new BigDecimal(12345678.90))
+                .status(OrderStatus.valueOf("PENDING"))
+                .build();
+    }
+
+    @AfterEach
+    void tearDown() {
+        order = null;
+    }
 
     @Test
     void shouldReturnAllOrders() {
@@ -41,17 +64,30 @@ class OrderServiceTest {
     }
 
     @Test
-    void shouldSaveProperOrder() {
-        Order newOrder = Order.builder()
-                .id(1)
-                .customerName("Pawel")
-                .orderCreatedDate(LocalDateTime.now())
-                .totalAmount(new BigDecimal(12345678.90))
-                .status(OrderStatus.valueOf("PENDING"))
-                .build();
+    void shouldFindOrderById() {
+        when(orderRepository.findById(1)).thenReturn(Optional.of(order));
 
-        when(orderRepository.save(newOrder)).thenReturn(newOrder);
-        Order savedOrder = service.putOrder(newOrder);
+        Order foundOrder = service.findOrderById(1);
+
+        assertEquals("Pawel", foundOrder.getCustomerName());
+        assertEquals(timeWhenCreated, foundOrder.getOrderCreatedDate());
+        assertEquals(OrderStatus.PENDING, foundOrder.getStatus());
+    }
+
+    @Test
+    void shouldNotFindOrderByNotExistedId() {
+        when(orderRepository.findById(10)).thenReturn(Optional.empty());
+
+        Order foundOrder = service.findOrderById(10);
+
+        assertNull(foundOrder);
+    }
+
+    @Test
+    void shouldSaveProperOrder() {
+
+        when(orderRepository.save(order)).thenReturn(order);
+        Order savedOrder = service.putOrder(order);
 
         assertEquals("Pawel", savedOrder.getCustomerName());
 //        assertEquals(new BigDecimal("12345678.90"), savedOrder.getTotalAmount()); //TODO: refactor needed
@@ -62,14 +98,14 @@ class OrderServiceTest {
     void shouldThrowExceptionWhenOrderStatusIsIncorrect() {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> creteOrder()
+                this::creteOrderWithInappropriateOrderStatus
         );
 
         assertNotNull(exception);
     }
 
-    private Order creteOrder() {
-        return Order.builder()
+    private void creteOrderWithInappropriateOrderStatus() {
+        Order.builder()
                 .id(1)
                 .customerName("Pawel")
                 .orderCreatedDate(LocalDateTime.now())
