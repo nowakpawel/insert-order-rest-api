@@ -1,6 +1,7 @@
 package pl.com.insert.orderapi.web.entity;
 
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,9 +29,14 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private  String customerName;
+    @Nullable
     private LocalDateTime orderCreatedDate;
+    @Nullable
+    private LocalDateTime orderUpdatedDate;
     private BigDecimal totalAmount;
+    @Nullable
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 }

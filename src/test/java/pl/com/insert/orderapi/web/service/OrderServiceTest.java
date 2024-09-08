@@ -51,8 +51,8 @@ class OrderServiceTest {
     @Test
     void shouldReturnAllOrders() {
         List<Order> orders = List.of(
-                new Order(1, "Pawel", LocalDateTime.now(), new BigDecimal("12345678.33"), OrderStatus.CANCELLED),
-                new Order(2, "insERT", LocalDateTime.now(), new BigDecimal("4561283.55"), OrderStatus.CANCELLED)
+                new Order(1, "Pawel", LocalDateTime.now(), null, new BigDecimal("12345678.33"), OrderStatus.CANCELLED),
+                new Order(2, "insERT", LocalDateTime.now(), null, new BigDecimal("4561283.55"), OrderStatus.CANCELLED)
         );
 
         when(orderRepository.findAll()).thenReturn(orders);
@@ -102,6 +102,14 @@ class OrderServiceTest {
         );
 
         assertNotNull(exception);
+    }
+
+    @Test
+    void shouldConfirmedOrder() {
+        when(orderRepository.findById(1)).thenReturn(Optional.of(order));
+        Order confirmedOrder = service.confirmOrder(1);
+
+        assertEquals(OrderStatus.CONFIRMED, confirmedOrder.getStatus());
     }
 
     private void creteOrderWithInappropriateOrderStatus() {

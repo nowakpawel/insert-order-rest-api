@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,7 +51,7 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "Page not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content),
     })
-    public ResponseEntity<Order> findOrderById(@Parameter(description = "Id of the order we wabt to findf", example = "1") @PathVariable("id") Integer id) {
+    public ResponseEntity<Order> findOrderById(@Parameter(description = "Id of the order we want to find", example = "1") @PathVariable("id") Integer id) {
         Order foundOrder = orderService.findOrderById(id);
 
         return ResponseEntity.ok(foundOrder);
@@ -69,4 +70,21 @@ public class OrderController {
         Order createdOrder = orderService.putOrder(order);
         return ResponseEntity.ok(createdOrder);
     }
+
+    @PutMapping("/orders/{id}/confirm")
+    @Operation(summary = "Confirm order with specific id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Confirm order with specific id",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Page not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content),
+    })
+    public ResponseEntity<Order> confirmOrder(@Parameter(description = "Id of the order that will be confirmed", example = "1") @PathVariable("id") Integer id) {
+        Order confirmedOrder = orderService.confirmOrder(id);
+
+        return ResponseEntity.ok(confirmedOrder);
+    }
+
+
 }
