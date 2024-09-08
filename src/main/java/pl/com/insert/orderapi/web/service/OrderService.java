@@ -7,7 +7,6 @@ import pl.com.insert.orderapi.web.domain.OrderStatus;
 import pl.com.insert.orderapi.web.entity.Order;
 import pl.com.insert.orderapi.web.repository.OrderRepository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

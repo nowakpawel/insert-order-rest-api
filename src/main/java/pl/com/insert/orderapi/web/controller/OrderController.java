@@ -58,7 +58,7 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    @Operation(summary = "Ad order to database")
+    @Operation(summary = "Add order to database")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Added new order",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))}),
