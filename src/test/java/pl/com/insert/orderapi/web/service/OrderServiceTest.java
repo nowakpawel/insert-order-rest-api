@@ -120,6 +120,14 @@ class OrderServiceTest {
         assertEquals(OrderStatus.CANCELLED, canceledOrder.getStatus());
     }
 
+    @Test
+    void shouldDeliverOrder() {
+        when(orderRepository.findById(1)).thenReturn(Optional.of(order));
+        Order canceledOrder = service.deliverOrder(1);
+
+        assertEquals(OrderStatus.DELIVERED, canceledOrder.getStatus());
+    }
+
     private void creteOrderWithInappropriateOrderStatus() {
         Order.builder()
                 .id(1)

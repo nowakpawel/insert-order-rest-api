@@ -70,4 +70,17 @@ public class OrderService {
         return null;
     }
 
+    public Order deliverOrder(Integer id) {
+        Order order = findOrderById(id);
+
+        if (order != null) {
+            order.setOrderUpdatedDate(LocalDateTime.now());
+            order.setStatus(OrderStatus.DELIVERED);
+            orderRepository.save(order);
+
+            return order;
+        }
+
+        return null;
+    }
 }

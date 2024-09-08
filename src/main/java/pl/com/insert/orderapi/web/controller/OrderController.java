@@ -101,5 +101,18 @@ public class OrderController {
         return ResponseEntity.ok(confirmedOrder);
     }
 
+    @PutMapping("/orders/{id}/deliver")
+    @Operation(summary = "Deliver order with specific id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Deliver order with specific id",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Page not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content),
+    })
+    public ResponseEntity<Order> deliverOrder(@Parameter(description = "Id of the order that will be confirmed", example = "1") @PathVariable("id") Integer id) {
+        Order delivereddOrder = orderService.deliverOrder(id);
 
+        return ResponseEntity.ok(delivereddOrder);
+    }
 }

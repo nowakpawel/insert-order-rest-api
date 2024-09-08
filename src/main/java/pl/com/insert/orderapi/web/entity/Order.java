@@ -29,7 +29,6 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private  String customerName;
     @Nullable
     private LocalDateTime orderCreatedDate;
