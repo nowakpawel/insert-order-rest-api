@@ -1,6 +1,6 @@
 package pl.com.insert.orderapi.web.entity;
 
-import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 import pl.com.insert.orderapi.web.domain.OrderStatus;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Data
 @AllArgsConstructor
@@ -25,10 +26,10 @@ import java.util.Date;
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private  String customerName;
-    private Date orderDate;
+    private LocalDateTime orderDate;
     private BigDecimal totalAmount;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;

@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.insert.orderapi.web.entity.Order;
@@ -31,9 +33,23 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "Page not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content),
     })
-    public ResponseEntity<List<Order>> test() {
+    public ResponseEntity<List<Order>> findAllOrders() {
         List<Order> orders = orderService.findAll();
 
         return ResponseEntity.ok(orders);
+    }
+
+    @PostMapping("/add")
+    @Operation(summary = "Ad order to database")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Added new order",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Page not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content),
+    })
+    public ResponseEntity<Order> addNewOrder(@RequestBody Order order) {
+        Order createdOrder = orderService.putOrder(order);
+        return ResponseEntity.ok(createdOrder);
     }
 }
