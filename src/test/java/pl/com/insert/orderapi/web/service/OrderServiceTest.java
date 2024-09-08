@@ -45,7 +45,7 @@ class OrderServiceTest {
         Order newOrder = Order.builder()
                 .id(1)
                 .customerName("Pawel")
-                .orderDate(LocalDateTime.now())
+                .orderCreatedDate(LocalDateTime.now())
                 .totalAmount(new BigDecimal(12345678.90))
                 .status(OrderStatus.valueOf("PENDING"))
                 .build();
@@ -72,7 +72,7 @@ class OrderServiceTest {
         return Order.builder()
                 .id(1)
                 .customerName("Pawel")
-                .orderDate(LocalDateTime.now())
+                .orderCreatedDate(LocalDateTime.now())
                 .totalAmount(new BigDecimal(12345678.90))
                 .status(OrderStatus.valueOf("Test"))
                 .build();
