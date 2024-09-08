@@ -39,7 +39,7 @@ class OrderServiceTest {
                 .customerName("Pawel")
                 .orderCreatedDate(timeWhenCreated)
                 .totalAmount(new BigDecimal(12345678.90))
-                .status(OrderStatus.valueOf("PENDING"))
+                .status(OrderStatus.PENDING)
                 .build();
     }
 
