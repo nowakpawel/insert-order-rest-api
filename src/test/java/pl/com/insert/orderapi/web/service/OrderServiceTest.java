@@ -112,6 +112,14 @@ class OrderServiceTest {
         assertEquals(OrderStatus.CONFIRMED, confirmedOrder.getStatus());
     }
 
+    @Test
+    void shouldCancelOrder() {
+        when(orderRepository.findById(1)).thenReturn(Optional.of(order));
+        Order canceledOrder = service.cancelOrder(1);
+
+        assertEquals(OrderStatus.CANCELLED, canceledOrder.getStatus());
+    }
+
     private void creteOrderWithInappropriateOrderStatus() {
         Order.builder()
                 .id(1)

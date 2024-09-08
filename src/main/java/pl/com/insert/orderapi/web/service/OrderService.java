@@ -7,6 +7,7 @@ import pl.com.insert.orderapi.web.domain.OrderStatus;
 import pl.com.insert.orderapi.web.entity.Order;
 import pl.com.insert.orderapi.web.repository.OrderRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,20 @@ public class OrderService {
         if (order != null) {
             order.setOrderUpdatedDate(LocalDateTime.now());
             order.setStatus(OrderStatus.CONFIRMED);
+            orderRepository.save(order);
+
+            return order;
+        }
+
+        return null;
+    }
+
+    public Order cancelOrder(Integer id) {
+        Order order = findOrderById(id);
+
+        if (order != null) {
+            order.setOrderUpdatedDate(LocalDateTime.now());
+            order.setStatus(OrderStatus.CANCELLED);
             orderRepository.save(order);
 
             return order;
